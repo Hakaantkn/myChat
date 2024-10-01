@@ -15,37 +15,36 @@ export default function Signup() {
       email,
       password,
     });
-    if (error) {
-      if (error.message.includes("not authorized")) {
-        setError("This email address is not authorized for sign-up.");
-      } else {
-        setError(error.message);
-      }
-    } else {
+    if (error) setError(error.message);
+    else {
       setSuccess(true);
       setError(null);
     }
   };
 
   return (
-    <form onSubmit={handleSignup}>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-        required
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-        required
-      />
-      <button type="submit">Sign Up</button>
+    <div className='siginDiv'>
+      <h1>Kayıt Ol</h1>
       {error && <p>{error}</p>}
-      {success && <p>Sign-up successful! Please check your email to verify your account.</p>}
-    </form>
+      {success ? (
+        <p>Kayıt başarılı! Giriş yapabilirsin!</p>
+      ) : (
+        <form className='signForm' onSubmit={handleSignup}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Şifre"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className='signBtn' type="submit">Kayıt Ol</button>
+        </form>
+      )}
+    </div>
   );
 }
