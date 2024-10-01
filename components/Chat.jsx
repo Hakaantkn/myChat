@@ -80,7 +80,7 @@ export default function Chat() {
     if (error) {
       console.error('Çıkış hatası:', error);
     } else {
-      router.push('/login');
+      router.push('/');
     }
   };
 
