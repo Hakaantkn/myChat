@@ -2,10 +2,14 @@
 import { createClient } from '@supabase/supabase-js';
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
+import { useRouter } from 'next/navigation';  
+
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const router = useRouter();  
+
 
   const fetchMessages = async () => {
     const { data, error } = await supabase
@@ -51,34 +55,52 @@ export default function Chat() {
     };
   }, []);
 
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) console.error('Çıkış hatası:', error);
+    else router.push('/login');
+
+
+};
+
+
   useEffect(() => {
     fetchMessages();
   }, []);
 
   return (
-    <div className="max-w-3xl mx-auto md:py-10 h-screen">
+<div className='mainContainer'>
+    <div className="container">
       <div className="h-full border rounded-md relative flex flex-col">
         <div>
           <div className="p-5 border-b flex items-center justify-between">
             <div>
-              <h1 className="text-xl font-bold">Daily Chat</h1>
-              <div className="flex items-center gap-1">
+              <h1 className="baslik text-xl font-bold">Daily Chat</h1>
+              <div className="flex items-center gap-1 ">
                 <div className="h-4 w-4 bg-green-500 rounded-full animate-pulse"></div>
                 {/* <h1 className="text-sm text-gray-400">2 online</h1> */}
               </div>
             </div>
+            <button onClick={handleSignOut}>Çıkış yap</button>
           </div>
           {/* Mesajları göstermek için */}
-          <div className='messagesUi p-4 overflow-y-scroll h-full flex'>
-            <div className='h-80'>
+          <div className='messagesUi p-4 overflow-y-scroll '>
+            
             {messages.map((message) => (
-              <div key={message.id} className="p-2 my-2 bg-gray-800 rounded-md">
+              <div key={message.id} className="mesajDiv p-2 my-2 bg-gray-800 rounded-md">
+                    <div>
                 <strong className="block">{message.gmail}</strong>
-                <p>{message.messages}</p>
+                <p className='message'>{message.messages}</p>
                 <span className="text-xs text-gray-400">{new Date(message.created_at).toLocaleString()}</span>
+                </div>
+                <div className='silBtn'>
+                    <button>mesajı sil</button>
+                </div>
+            
+
               </div>
             ))}
-            </div>
+
             
           </div>
         </div>
@@ -100,5 +122,6 @@ export default function Chat() {
         </div>
       </div>
     </div>
+</div>
   );
 }

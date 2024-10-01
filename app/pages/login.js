@@ -22,7 +22,7 @@ export default function Login() {
 
   return (
     <div className='loginDiv'>
-      <h1>Giriş Yap</h1>
+      <h1 className='loginH1'>Giriş Yap</h1>
       {error && <p>{error}</p>}
       <form className='loginForm' onSubmit={handleLogin}>
         <input 

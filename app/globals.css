@@ -77,6 +77,16 @@ body {
     --chart-5: 340 75% 55%;
   }
 }
+.mainContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.container{
+  max-width: 800px;
+  height: 600px;
+}
 
 .kancik{
   display: flex;
@@ -133,9 +143,31 @@ body {
   border-radius: 8px;
 }
 .messagesUi{
+height: 425px;
+
+
+}
+.baslik{
+  color: white;
+}
+.block{
+  color: green;
+}
+.message{
+  color: white;
+
+}
+.siginH1{
+  color: white;
+}
+.loginH1{
+  color: white;
+}
+.mesajDiv{
   display: flex;
-  padding-left: 50px;
-  padding-top: 20px;
-  flex-direction: column;
+  justify-content: space-between;
+}
+.silBtn{
+  color: red;
 
 }

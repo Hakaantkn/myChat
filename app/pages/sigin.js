@@ -24,7 +24,7 @@ export default function Signup() {
 
   return (
     <div className='siginDiv'>
-      <h1>Kayıt Ol</h1>
+      <h1 className='siginH1'>Kayıt Ol</h1>
       {error && <p>{error}</p>}
       {success ? (
         <p>Kayıt başarılı! Giriş yapabilirsin!</p>
