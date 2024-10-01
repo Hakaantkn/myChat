@@ -57,8 +57,8 @@ export default function Chat() {
 
   return (
     <div className="max-w-3xl mx-auto md:py-10 h-screen">
-      <div className="h-full border rounded-md relative">
-        <div className="h-20">
+      <div className="h-full border rounded-md relative flex flex-col">
+        <div>
           <div className="p-5 border-b flex items-center justify-between">
             <div>
               <h1 className="text-xl font-bold">Daily Chat</h1>
@@ -69,7 +69,8 @@ export default function Chat() {
             </div>
           </div>
           {/* Mesajları göstermek için */}
-          <div className='messagesUi p-4 overflow-y-scroll h-80'>
+          <div className='messagesUi p-4 overflow-y-scroll h-full flex'>
+            <div className='h-80'>
             {messages.map((message) => (
               <div key={message.id} className="p-2 my-2 bg-gray-800 rounded-md">
                 <strong className="block">{message.gmail}</strong>
@@ -77,6 +78,8 @@ export default function Chat() {
                 <span className="text-xs text-gray-400">{new Date(message.created_at).toLocaleString()}</span>
               </div>
             ))}
+            </div>
+            
           </div>
         </div>
 
