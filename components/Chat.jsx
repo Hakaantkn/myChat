@@ -85,54 +85,56 @@ export default function Chat() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto md:py-10 h-screen">
-      <div className="h-full border rounded-md relative">
-        <div className="h-20">
-          <div className="p-5 border-b flex items-center justify-between">
-            <div>
-              <h1 className="text-xl font-bold">Daily Chat</h1>
-              <div className="flex items-center gap-1">
-                <div className="h-4 w-4 bg-green-500 rounded-full animate-pulse"></div>
-                {/* <h1 className="text-sm text-gray-400">2 online</h1> */}
-              </div>
-            </div>
-            <button className='exitBtn' onClick={handleSignOut}>Çıkış yap</button>
-          </div>
-          {/* Mesajları göstermek için */}
-          <div className='messagesUi p-4 overflow-y-scroll '>
-            {messages.map((message) => (
-              <div key={message.id} className="mesajDiv p-2 my-2 bg-gray-800 rounded-md">
+    <div className='mainContainer'>
+        <div className="container">
+        <div className="h-full border rounded-md relative">
+            <div className="h-20">
+            <div className="p-5 border-b flex items-center justify-between">
                 <div>
-                  <strong className="block">{message.gmail}</strong>
-                  <p className='message'>{message.messages}</p>
-                  <span className="text-xs text-gray-400">{new Date(message.created_at).toLocaleString()}</span>
+                <h1 className="text-xl font-bold">Daily Chat</h1>
+                <div className="flex items-center gap-1">
+                    <div className="h-4 w-4 bg-green-500 rounded-full animate-pulse"></div>
+                    {/* <h1 className="text-sm text-gray-400">2 online</h1> */}
                 </div>
-                {currentUser && currentUser.email === message.gmail && (
-                  <div className='silBtn'>
-                    <button onClick={() => handleDeleteMessage(message.id)}>mesajı sil</button>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+                </div>
+                <button className='exitBtn' onClick={handleSignOut}>Çıkış yap</button>
+            </div>
+            {/* Mesajları göstermek için */}
+            <div className='messagesUi p-4 overflow-y-scroll '>
+                {messages.map((message) => (
+                <div key={message.id} className="mesajDiv p-2 my-2 bg-gray-800 rounded-md">
+                    <div>
+                    <strong className="block">{message.gmail}</strong>
+                    <p className='message'>{message.messages}</p>
+                    <span className="text-xs text-gray-400">{new Date(message.created_at).toLocaleString()}</span>
+                    </div>
+                    {currentUser && currentUser.email === message.gmail && (
+                    <div className='silBtn'>
+                        <button onClick={() => handleDeleteMessage(message.id)}>mesajı sil</button>
+                    </div>
+                    )}
+                </div>
+                ))}
+            </div>
+            </div>
 
-        <div className="chatInput absolute bottom-0 left-0 right-0 p-4 border-t">
-          <input
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyDown={async (e) => {
-              if (e.key === 'Enter') {
-                await handleSendMessage(e.currentTarget.value);
+            <div className="chatInput absolute bottom-0 left-0 right-0 p-4 border-t">
+            <input
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                onKeyDown={async (e) => {
+                if (e.key === 'Enter') {
+                    await handleSendMessage(e.currentTarget.value);
 
-              }
-            }}
-            type="text"
-            placeholder="Bir mesaj gönderin"
-            className="inputMesaj w-full p-2 border rounded-md text-white placeholder-white"
-          />
+                }
+                }}
+                type="text"
+                placeholder="Bir mesaj gönderin"
+                className="inputMesaj w-full p-2 border rounded-md text-white placeholder-white"
+            />
+            </div>
         </div>
-      </div>
+        </div>
     </div>
   );
 }
