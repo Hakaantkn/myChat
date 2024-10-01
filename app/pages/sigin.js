@@ -4,11 +4,11 @@ import { supabase } from '@/lib/supabaseClient';
 import "../globals.css";
 
 export default function Signup() {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState(''); // Assuming you have an email state
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-  
+
   const handleSignup = async (e) => {
     e.preventDefault();
     const { data, error } = await supabase.auth.signUp({
@@ -28,28 +28,24 @@ export default function Signup() {
   };
 
   return (
-    <div className='siginDiv'>
-      <h1>Kayıt Ol</h1>
+    <form onSubmit={handleSignup}>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        required
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        required
+      />
+      <button type="submit">Sign Up</button>
       {error && <p>{error}</p>}
-      {success ? (
-        <p>Kayıt başarılı! Giriş yapabilirsin!</p>
-      ) : (
-        <form className='signForm' onSubmit={handleSignup}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Şifre"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button className='signBtn' type="submit">Kayıt Ol</button>
-        </form>
-      )}
-    </div>
+      {success && <p>Sign-up successful! Please check your email to verify your account.</p>}
+    </form>
   );
 }
