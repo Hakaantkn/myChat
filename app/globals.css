@@ -90,6 +90,14 @@ body {
 .loginBtn{
   color: orange;
 }
+.chatBtn{
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 8px;
+}
+.chatBtn:hover{
+  background-color: purple;
+}
 .signForm{
   display: flex;
   justify-content: center;
@@ -105,4 +113,27 @@ body {
   flex-direction: column;
   gap: 20px;
   color: black;
+}
+.chatInput{
+  display: flex;
+  gap: 10px;
+}
+.inputMesaj{
+  background-color: #0a0a0a;
+}
+.loginDiv{
+  padding: 50px;
+  border: 2px solid white;
+  border-radius: 8px;
+}
+.siginDiv{
+  padding: 50px;
+  border: 2px solid white;
+  border-radius: 8px;
+}
+.messagesUi{
+  display: flex;
+  padding-left: 50px;
+  padding-top: 20px;
+  flex-direction: column;
 }

@@ -1,13 +1,13 @@
 "use client"
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';  // useRouter hook'u burada kullanılıyor
+import { useRouter } from 'next/navigation';  
 import { supabase } from '@/lib/supabaseClient';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const router = useRouter();  // useRouter'ı burada tanımlıyoruz
+  const router = useRouter();  
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -15,13 +15,13 @@ export default function Login() {
     if (error) {
       setError(error.message);
     } else {
-      // Giriş başarılı olduğunda kullanıcıyı başka bir sayfaya yönlendiriyoruz
+
       router.push('/dashboard');
     }
   };
 
   return (
-    <div>
+    <div className='loginDiv'>
       <h1>Giriş Yap</h1>
       {error && <p>{error}</p>}
       <form className='loginForm' onSubmit={handleLogin}>

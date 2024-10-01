@@ -23,11 +23,11 @@ export default function Signup() {
   };
 
   return (
-    <div >
+    <div className='siginDiv'>
       <h1>Kayıt Ol</h1>
       {error && <p>{error}</p>}
       {success ? (
-        <p>Kayıt başarılı! E-posta adresini kontrol et.</p>
+        <p>Kayıt başarılı! Giriş yapabilirsin!</p>
       ) : (
         <form className='signForm' onSubmit={handleSignup}>
           <input
