@@ -4,19 +4,24 @@ import { supabase } from '@/lib/supabaseClient';
 import "../globals.css";
 
 export default function Signup() {
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(''); // Assuming you have an email state
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-
+  
   const handleSignup = async (e) => {
     e.preventDefault();
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
     });
-    if (error) setError(error.message);
-    else {
+    if (error) {
+      if (error.message.includes("not authorized")) {
+        setError("This email address is not authorized for sign-up.");
+      } else {
+        setError(error.message);
+      }
+    } else {
       setSuccess(true);
       setError(null);
     }
