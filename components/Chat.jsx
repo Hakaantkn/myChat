@@ -82,7 +82,7 @@ export default function Chat() {
                 {/* <h1 className="text-sm text-gray-400">2 online</h1> */}
               </div>
             </div>
-            <button onClick={handleSignOut}>Çıkış yap</button>
+            <button className='exitBtn' onClick={handleSignOut}>Çıkış yap</button>
           </div>
           {/* Mesajları göstermek için */}
           <div className='messagesUi p-4 overflow-y-scroll '>

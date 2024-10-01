@@ -174,3 +174,29 @@ height: 425px;
 .loginOnay{
   color: white;
 }
+.exitBtn{
+  padding: 10px;
+  border: 1px solid red;
+  border-radius: 8px;
+  color: white;
+  background-color: red;
+  transition: box-shadow 0.2s;
+
+}
+.exitBtn:hover{
+  box-shadow: 0 0 30px red;
+}
+.loginBtn{
+  padding: 10px;
+  border: 1px solid orange;
+  border-radius: 8px;
+  background-color: orange;
+  color: white;
+}
+.signBtn{
+  padding: 10px;
+  border: 1px solid orange;
+  border-radius: 8px;
+  background-color: orange;
+  color: white;
+}
