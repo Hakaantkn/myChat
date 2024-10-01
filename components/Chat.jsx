@@ -2,15 +2,13 @@
 import { createClient } from '@supabase/supabase-js';
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { useRouter } from 'next/navigation';  
-import Link from 'next/link';
-
+import { useRouter } from 'next/navigation';
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const router = useRouter();  
-
+  const [currentUser, setCurrentUser] = useState(null);
+  const router = useRouter();
 
   const fetchMessages = async () => {
     const { data, error } = await supabase
@@ -23,6 +21,11 @@ export default function Chat() {
     } else {
       setMessages(data);
     }
+  };
+
+  const fetchCurrentUser = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    setCurrentUser(user);
   };
 
   const handleSendMessage = async (text) => {
@@ -43,7 +46,23 @@ export default function Chat() {
     }
   };
 
+  const handleDeleteMessage = async (id) => {
+    const { error } = await supabase
+      .from('mychat')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error('Mesaj silinirken bir hata oluştu:', error);
+    } else {
+      setMessages((currentMessages) => currentMessages.filter(message => message.id !== id));
+    }
+  };
+
   useEffect(() => {
+    fetchCurrentUser();
+    fetchMessages();
+
     const messageListener = supabase
       .channel('public:mychat')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'mychat' }, (payload) => {
@@ -58,26 +77,21 @@ export default function Chat() {
 
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
-    if (error) console.error('Çıkış hatası:', error);
-    else router.push('/');
-
-
-};
-
-
-  useEffect(() => {
-    fetchMessages();
-  }, []);
+    if (error) {
+      console.error('Çıkış hatası:', error);
+    } else {
+      router.push('/login');
+    }
+  };
 
   return (
-<div className='mainContainer'>
-    <div className="container">
-      <div className="h-full border rounded-md relative flex flex-col">
-        <div>
+    <div className="max-w-3xl mx-auto md:py-10 h-screen">
+      <div className="h-full border rounded-md relative">
+        <div className="h-20">
           <div className="p-5 border-b flex items-center justify-between">
             <div>
-              <h1 className="baslik text-xl font-bold">Daily Chat</h1>
-              <div className="flex items-center gap-1 ">
+              <h1 className="text-xl font-bold">Daily Chat</h1>
+              <div className="flex items-center gap-1">
                 <div className="h-4 w-4 bg-green-500 rounded-full animate-pulse"></div>
                 {/* <h1 className="text-sm text-gray-400">2 online</h1> */}
               </div>
@@ -86,23 +100,20 @@ export default function Chat() {
           </div>
           {/* Mesajları göstermek için */}
           <div className='messagesUi p-4 overflow-y-scroll '>
-            
             {messages.map((message) => (
               <div key={message.id} className="mesajDiv p-2 my-2 bg-gray-800 rounded-md">
-                    <div>
-                <strong className="block">{message.gmail}</strong>
-                <p className='message'>{message.messages}</p>
-                <span className="text-xs text-gray-400">{new Date(message.created_at).toLocaleString()}</span>
+                <div>
+                  <strong className="block">{message.gmail}</strong>
+                  <p className='message'>{message.messages}</p>
+                  <span className="text-xs text-gray-400">{new Date(message.created_at).toLocaleString()}</span>
                 </div>
-                <div className='silBtn'>
-                    <button>mesajı sil</button>
-                </div>
-            
-
+                {currentUser && currentUser.email === message.gmail && (
+                  <div className='silBtn'>
+                    <button onClick={() => handleDeleteMessage(message.id)}>mesajı sil</button>
+                  </div>
+                )}
               </div>
             ))}
-
-            
           </div>
         </div>
 
@@ -123,6 +134,5 @@ export default function Chat() {
         </div>
       </div>
     </div>
-</div>
   );
 }
