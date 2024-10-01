@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { useRouter } from 'next/navigation';  
+import Link from 'next/link';
 
 
 export default function Chat() {
@@ -58,7 +59,7 @@ export default function Chat() {
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) console.error('Çıkış hatası:', error);
-    else router.push('/login');
+    else router.push('/');
 
 
 };

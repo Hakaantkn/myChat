@@ -27,7 +27,7 @@ export default function Signup() {
       <h1 className='siginH1'>Kayıt Ol</h1>
       {error && <p>{error}</p>}
       {success ? (
-        <p>Kayıt başarılı! Giriş yapabilirsin!</p>
+        <p className='loginOnay'>Kayıt başarılı! Giriş yapabilirsin!</p>
       ) : (
         <form className='signForm' onSubmit={handleSignup}>
           <input
